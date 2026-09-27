@@ -1,0 +1,1239 @@
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+  --bg: #05060b;
+  --surface: #0d0f18;
+  --text: #f5f0e8;
+  --muted: #a9a4a0;
+  --gold: #d7b98a;
+  --line: rgba(255, 255, 255, .11);
+}
+
+
+/* =========================================================
+   BASE
+========================================================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+body.locked {
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -5;
+
+  background:
+    radial-gradient(
+      circle at 50% 10%,
+      rgba(88, 74, 130, .22),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 15% 55%,
+      rgba(62, 78, 120, .12),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(150, 113, 73, .10),
+      transparent 25%
+    );
+
+  pointer-events: none;
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: .035;
+
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+}
+
+
+/* =========================================================
+   STARS
+========================================================= */
+
+.stars,
+.birthday-stars,
+.loader-stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.stars {
+  z-index: -2;
+}
+
+.stars:before,
+.stars:after,
+.birthday-stars:before {
+  content: "✦  ·   ˚   ·   ✧      ·    ✦   ·     ˚      ✧  ·  ✦";
+
+  position: absolute;
+  inset: 0;
+
+  color: rgba(255, 255, 255, .42);
+  font-size: 11px;
+  letter-spacing: 28px;
+  line-height: 70px;
+
+  animation: drift 24s linear infinite;
+}
+
+.stars:after {
+  transform: translate(40px, 30px);
+  opacity: .35;
+  animation-duration: 32s;
+}
+
+@keyframes drift {
+  to {
+    transform: translateY(-90px);
+  }
+}
+
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+#loader {
+  position: fixed;
+  inset: 0;
+
+  z-index: 1000;
+
+  background: #04050a;
+
+  display: grid;
+  place-items: center;
+
+  opacity: 1;
+  visibility: visible;
+
+  pointer-events: auto;
+
+  transition:
+    opacity 1.2s ease,
+    visibility 1.2s ease;
+}
+
+
+/* Loader hidden state */
+
+#loader.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+
+/* Loader content */
+
+.loader-content {
+  text-align: center;
+
+  position: relative;
+  z-index: 1001;
+
+  pointer-events: auto;
+}
+
+
+/* Small star */
+
+.mini-star {
+  display: block;
+
+  color: var(--gold);
+  font-size: 18px;
+
+  margin-bottom: 25px;
+
+  animation: pulse 2s infinite;
+}
+
+
+/* Loader text */
+
+.loader-content p,
+.eyebrow {
+  color: #a9a2a0;
+
+  text-transform: uppercase;
+  letter-spacing: 4px;
+
+  font-size: 10px;
+}
+
+
+/* Loader heading */
+
+.loader-content h1 {
+  font: 500 72px/1 'Cormorant Garamond', serif;
+
+  margin: 14px 0 38px;
+}
+
+
+/* =========================================================
+   ENTER BUTTON
+========================================================= */
+
+#enterBtn {
+  position: relative;
+  z-index: 1002;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+  color: var(--text);
+
+  border: 1px solid rgba(255, 255, 255, .2);
+
+  padding: 13px 25px;
+
+  border-radius: 50px;
+
+  font: 400 12px 'DM Sans', sans-serif;
+
+  letter-spacing: 2px;
+
+  cursor: pointer;
+
+  pointer-events: auto;
+
+  outline: none;
+
+  transition:
+    background .4s ease,
+    color .4s ease,
+    border-color .4s ease,
+    transform .4s ease;
+}
+
+#enterBtn span {
+  margin-left: 12px;
+}
+
+#enterBtn:hover {
+  background: #fff;
+  color: #05060b;
+
+  border-color: #fff;
+
+  transform: translateY(-2px);
+}
+
+#enterBtn:active {
+  transform: translateY(0) scale(.97);
+}
+
+#enterBtn:focus-visible {
+  outline: 1px solid var(--gold);
+  outline-offset: 5px;
+}
+
+
+/* =========================================================
+   MUSIC BUTTON
+========================================================= */
+
+.music-toggle {
+  position: fixed;
+
+  right: 25px;
+  top: 24px;
+
+  z-index: 60;
+
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  border: 1px solid var(--line);
+
+  background: rgba(8, 9, 14, .55);
+
+  backdrop-filter: blur(12px);
+
+  color: #eee;
+
+  border-radius: 30px;
+
+  padding: 10px 15px;
+
+  cursor: pointer;
+
+  font-size: 11px;
+  letter-spacing: 1px;
+
+  opacity: 0;
+
+  transition: .5s;
+}
+
+
+/* Music button appears after Enter */
+
+body.started .music-toggle {
+  opacity: 1;
+}
+
+.music-icon {
+  font-size: 16px;
+}
+
+.music-toggle.playing .music-icon {
+  animation: musicPulse .7s infinite alternate;
+}
+
+@keyframes musicPulse {
+  to {
+    transform: translateY(-3px) scale(1.15);
+  }
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+  min-height: 100svh;
+
+  display: grid;
+  place-items: center;
+
+  text-align: center;
+
+  position: relative;
+
+  padding: 80px 25px;
+}
+
+.hero-glow {
+  position: absolute;
+
+  width: 480px;
+  height: 480px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(194, 157, 100, .13),
+      transparent 65%
+    );
+
+  filter: blur(10px);
+}
+
+.hero > *:not(.hero-glow) {
+  position: relative;
+}
+
+.hero-title {
+  font:
+    500
+    clamp(65px, 11vw, 150px)
+    /.75
+    'Cormorant Garamond',
+    serif;
+
+  margin: 32px 0;
+}
+
+.hero-title span {
+  display: block;
+}
+
+.hero-title em {
+  font-weight: 400;
+  color: #cdb997;
+}
+
+.hero-sub {
+  color: #99969a;
+
+  font-size: 14px;
+  letter-spacing: .5px;
+}
+
+.scroll-cue {
+  position: absolute;
+
+  bottom: 45px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  color: #777;
+
+  font-size: 9px;
+
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.scroll-cue i {
+  display: block;
+
+  width: 1px;
+  height: 42px;
+
+  background:
+    linear-gradient(
+      #777,
+      transparent
+    );
+
+  margin: 13px auto 0;
+}
+
+
+/* =========================================================
+   MEMORY SECTION
+========================================================= */
+
+.memory-space {
+  max-width: 1250px;
+
+  margin: auto;
+
+  position: relative;
+
+  padding: 100px 30px 220px;
+}
+
+
+/* =========================================================
+   PHOTO CARDS
+========================================================= */
+
+.photo-card {
+  position: relative;
+
+  overflow: hidden;
+
+  background: #11131b;
+
+  border: 1px solid rgba(255, 255, 255, .12);
+
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, .45);
+
+  transition:
+    transform .8s cubic-bezier(.2, .7, .2, 1);
+}
+
+.photo-card img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  filter:
+    saturate(.82)
+    contrast(1.04);
+
+  transition:
+    transform 1.2s ease,
+    filter 1s;
+}
+
+.photo-card:hover img {
+  transform: scale(1.035);
+
+  filter:
+    saturate(1)
+    contrast(1.04);
+}
+
+.photo-number {
+  position: absolute;
+
+  bottom: 13px;
+  right: 15px;
+
+  font-size: 9px;
+
+  letter-spacing: 2px;
+
+  color: rgba(255, 255, 255, .55);
+}
+
+
+/* =========================================================
+   PHOTO SCENES
+========================================================= */
+
+.photo-scene {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 85vh;
+
+  gap: 90px;
+}
+
+.photo-scene .photo-card {
+  width: min(430px, 75vw);
+
+  aspect-ratio: 4 / 5;
+}
+
+.photo-scene .photo-card.wide {
+  width: min(600px, 82vw);
+
+  aspect-ratio: 16 / 10;
+}
+
+
+/* Tilt */
+
+.tilt-left {
+  transform: rotate(-3deg);
+}
+
+.tilt-right {
+  transform: rotate(3deg);
+}
+
+.tilt-left:hover,
+.tilt-right:hover {
+  transform: rotate(0) scale(1.015);
+}
+
+
+/* Caption */
+
+.photo-caption {
+  font:
+    italic 32px
+    'Cormorant Garamond';
+
+  color: #b7b0aa;
+
+  max-width: 200px;
+}
+
+
+/* Side note */
+
+.side-note {
+  font-size: 10px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 4px;
+
+  color: #777;
+
+  line-height: 2;
+}
+
+.side-note span {
+  color: #cbb28f;
+}
+
+
+/* Scene 2 */
+
+.scene-2 {
+  min-height: 95vh;
+}
+
+
+/* =========================================================
+   PHOTO PAIR
+========================================================= */
+
+.photo-pair {
+  display: flex;
+
+  justify-content: center;
+  align-items: flex-start;
+
+  gap: 70px;
+
+  min-height: 75vh;
+
+  padding: 100px 0;
+}
+
+.photo-card.small {
+  width: min(340px, 42vw);
+
+  aspect-ratio: 3 / 4;
+}
+
+.photo-card.lower {
+  margin-top: 120px;
+}
+
+
+/* =========================================================
+   QUOTES
+========================================================= */
+
+.quote-block {
+  text-align: center;
+
+  padding: 120px 20px 160px;
+}
+
+.quote-block span {
+  color: var(--gold);
+
+  font-size: 15px;
+}
+
+.quote-block p {
+  font:
+    400
+    clamp(28px, 4vw, 52px)
+    /1.12
+    'Cormorant Garamond';
+
+  color: #d2cdc6;
+
+  margin-top: 20px;
+}
+
+
+/* =========================================================
+   CINEMATIC IMAGE
+========================================================= */
+
+.cinematic {
+  width: min(780px, 90vw) !important;
+
+  aspect-ratio: 16 / 9 !important;
+}
+
+
+/* =========================================================
+   SCENE 3 / 4
+========================================================= */
+
+.scene-3 {
+  min-height: 100vh;
+}
+
+.scene-4 {
+  gap: 100px;
+}
+
+
+/* =========================================================
+   FLOATING QUOTES
+========================================================= */
+
+.floating-quote {
+  font:
+    italic 26px
+    'Cormorant Garamond';
+
+  color: #8e8986;
+
+  max-width: 300px;
+}
+
+
+/* Quote 1 remains floating */
+
+.quote-one {
+  position: absolute;
+
+  left: 3%;
+  top: 9%;
+}
+
+
+/*
+   Quote 2 is NOT absolute.
+
+   It stays inside memory-space and sits
+   between photo 06/07 and photo 08/09/10.
+*/
+
+.memory-space .floating-quote.quote-two {
+  position: relative;
+
+  left: auto;
+  right: auto;
+  top: auto;
+  bottom: auto;
+
+  width: 100%;
+  max-width: 700px;
+
+  margin: 120px auto;
+
+  text-align: center;
+
+  display: block;
+
+  z-index: 20;
+
+  transform: none;
+}
+
+
+/* =========================================================
+   PHOTO STRIP
+========================================================= */
+
+.photo-strip {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 25px;
+
+  padding: 120px 0 180px;
+}
+
+.photo-strip .photo-card {
+  width: 29%;
+
+  aspect-ratio: 4 / 5;
+}
+
+.photo-strip .photo-card:nth-child(2) {
+  margin-top: -65px;
+}
+
+
+/* =========================================================
+   CENTER LINE
+========================================================= */
+
+.center-line {
+  text-align: center;
+
+  padding: 140px 0;
+}
+
+.center-line p {
+  font:
+    italic 34px/1.15
+    'Cormorant Garamond';
+
+  color: #aaa;
+}
+
+.center-line strong {
+  color: #ddd;
+
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   PHOTO MOSAIC
+========================================================= */
+
+.photo-mosaic {
+  display: grid;
+
+  grid-template-columns: 1.1fr .8fr;
+
+  grid-template-rows: 260px 260px;
+
+  gap: 20px;
+
+  width: min(850px, 90vw);
+
+  margin: auto;
+
+  min-height: 600px;
+}
+
+.photo-mosaic .photo-card {
+  height: 100%;
+}
+
+.photo-mosaic .m1 {
+  grid-row: 1 / 3;
+}
+
+.photo-mosaic .m2 {
+  grid-column: 2;
+}
+
+.photo-mosaic .m3 {
+  grid-column: 2;
+}
+
+
+/* =========================================================
+   LARGE QUOTE
+========================================================= */
+
+.quote-large {
+  padding-top: 180px;
+}
+
+
+/* =========================================================
+   TALL PHOTO
+========================================================= */
+
+.photo-scene .photo-card.tall {
+  width: min(500px, 80vw);
+
+  aspect-ratio: 3 / 4 !important;
+}
+
+
+/* =========================================================
+   FINAL PAIR
+========================================================= */
+
+.final-pair {
+  padding: 120px 0;
+}
+
+
+/* =========================================================
+   FINAL MEMORY
+========================================================= */
+
+.final-memory {
+  min-height: 100vh;
+
+  display: grid;
+
+  place-items: center;
+
+  position: relative;
+}
+
+.final-photo {
+  width: min(570px, 82vw);
+
+  aspect-ratio: 4 / 5;
+
+  z-index: 2;
+}
+
+.final-glow {
+  position: absolute;
+
+  width: 600px;
+  height: 600px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(191, 151, 90, .14),
+      transparent 68%
+    );
+
+  filter: blur(25px);
+}
+
+
+/* =========================================================
+   BIRTHDAY SECTION
+========================================================= */
+
+.birthday {
+  min-height: 110svh;
+
+  position: relative;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 100px 25px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent,
+      #08080e 25%,
+      #05060b
+    );
+}
+
+.birthday h2 {
+  font:
+    500
+    clamp(65px, 10vw, 135px)
+    /.78
+    'Cormorant Garamond',
+    serif;
+
+  margin: 45px 0 60px;
+}
+
+.birthday h2 em {
+  color: #cdb997;
+}
+
+.birthday-message p {
+  font:
+    400 18px/1.6
+    'Cormorant Garamond';
+
+  color: #a8a29b;
+}
+
+
+/* Birthday name */
+
+.birthday-name {
+  margin: 75px 0 45px;
+}
+
+.birthday-name span {
+  display: block;
+
+  text-transform: uppercase;
+
+  letter-spacing: 5px;
+
+  font-size: 10px;
+
+  color: #999;
+}
+
+.birthday-name strong {
+  display: block;
+
+  font:
+    500
+    clamp(65px, 9vw, 120px)
+    /.9
+    'Parisienne',
+    cursive;
+
+  color: #eee;
+
+  margin: 12px 0;
+}
+
+.birthday-name i {
+  font-style: normal;
+
+  color: var(--gold);
+}
+
+
+/* Future line */
+
+.future-line {
+  color: #858187;
+
+  font:
+    italic 18px/1.6
+    'Cormorant Garamond';
+}
+
+
+/* Signature */
+
+.signature {
+  font:
+    italic 28px
+    'Cormorant Garamond';
+
+  color: #c9b28f;
+
+  margin-top: 70px;
+}
+
+
+/* Footer */
+
+footer {
+  text-align: center;
+
+  padding: 25px;
+
+  color: #444;
+
+  font-size: 9px;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   REVEAL ANIMATION
+========================================================= */
+
+.reveal {
+  opacity: 0;
+
+  transform: translateY(45px);
+
+  transition:
+    opacity 1.1s ease,
+    transform 1.1s cubic-bezier(.2, .7, .2, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+
+  transform: none;
+}
+
+
+/* =========================================================
+   BIRTHDAY LABEL
+========================================================= */
+
+.birthday-label {
+  color: var(--gold);
+
+  font-family: 'Parisienne', cursive;
+
+  font-size: clamp(28px, 4vw, 42px);
+
+  margin-bottom: 18px;
+
+  opacity: 0;
+
+  transform: translateY(20px);
+
+  transition:
+    opacity 1s ease,
+    transform 1s ease;
+}
+
+.birthday-label.visible {
+  opacity: 1;
+
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes pulse {
+  50% {
+    opacity: .35;
+
+    transform: scale(.8);
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  /* Loader */
+
+  .loader-content h1 {
+    font-size: 56px;
+  }
+
+  #enterBtn {
+    padding: 12px 22px;
+  }
+
+
+  /* Hero */
+
+  .hero-title {
+    font-size: 68px;
+  }
+
+
+  /* Memory */
+
+  .memory-space {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+
+  /* Scenes */
+
+  .photo-scene {
+    min-height: 80vh;
+
+    gap: 25px;
+
+    flex-direction: column;
+  }
+
+  .photo-caption {
+    font-size: 25px;
+
+    text-align: center;
+  }
+
+
+  /* Photo pair */
+
+  .photo-pair {
+    gap: 18px;
+
+    padding: 70px 0;
+  }
+
+  .photo-card.small {
+    width: 43vw;
+  }
+
+  .photo-card.lower {
+    margin-top: 60px;
+  }
+
+
+  /* Quote */
+
+  .quote-block {
+    padding: 90px 10px;
+  }
+
+  .quote-block p {
+    font-size: 31px;
+  }
+
+
+  /* Scene 4 */
+
+  .scene-4 {
+    flex-direction: row;
+
+    gap: 25px;
+  }
+
+  .scene-4 .photo-card {
+    width: 43vw !important;
+  }
+
+
+  /*
+     Keep quote 2 visible on desktop,
+     but hide it on small screens because
+     the mobile layout already becomes crowded.
+  */
+
+  .floating-quote {
+    display: none;
+  }
+
+
+  /* Photo strip */
+
+  .photo-strip {
+    gap: 10px;
+
+    padding: 80px 0;
+  }
+
+  .photo-strip .photo-card {
+    width: 31%;
+  }
+
+
+  /* Mosaic */
+
+  .photo-mosaic {
+    grid-template-rows: 180px 180px;
+
+    min-height: 380px;
+
+    gap: 10px;
+  }
+
+
+  /* Center line */
+
+  .center-line {
+    padding: 100px 0;
+  }
+
+  .center-line p {
+    font-size: 30px;
+  }
+
+
+  /* Music */
+
+  .music-toggle {
+    right: 15px;
+
+    top: 15px;
+
+    padding: 9px 12px;
+  }
+
+
+  /* Birthday */
+
+  .birthday {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+}
+.music-toggle {
+    display: none !important;
+}
